@@ -1,9 +1,9 @@
 import java.util.Random;
 
 public class MineField {
-	static final int BOARD_SIZE = 25;
+	static final int BOARD_SIZE = 30;
     int[][] field = new int[BOARD_SIZE][BOARD_SIZE];
-    final int SAFE_SPACE_CHANCE = 3;
+    final int SAFE_SPACE_CHANCE = 5;
 
 
     public MineField() {
@@ -32,6 +32,7 @@ public class MineField {
     	int currentCol = (BOARD_SIZE/2)-1;
     	testField[currentRow][currentCol] = 2;
     	int movesAllowed = 0;
+    	int downMoves = 0;
     	for(int i = 0; i < sequenceToTest.length(); i++) {
     		
     		
@@ -53,6 +54,7 @@ public class MineField {
     				if(testField[currentRow+1][currentCol] != 1 && testField[currentRow+1][currentCol] != 2) { //there isn't a mine on the spot you want to go to
     					currentRow++;
     					testField[currentRow][currentCol] = 2; //mark the spot on the board where you are (for fun)
+    					downMoves++;
     				} else {
     					break;
     				}
@@ -95,7 +97,7 @@ public class MineField {
     	}
     	
     	testField[currentRow][currentCol] = 2;
-    	double score = BOARD_SIZE - currentRow + (movesAllowed * .5);
+    	double score = BOARD_SIZE - currentRow + (movesAllowed * .5) + downMoves;
     	Runner.readCurrentRow(currentRow);
     	return score;
     }
